@@ -15,4 +15,8 @@ public class Wallet {
 
     @Column(nullable = false)
     private Double balance;
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
 }

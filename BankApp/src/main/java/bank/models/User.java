@@ -25,4 +25,12 @@ public class User {
     @OneToMany(mappedBy = "receiver")
     private Set<Transaction> receivedTransactions = new HashSet<>();
 
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

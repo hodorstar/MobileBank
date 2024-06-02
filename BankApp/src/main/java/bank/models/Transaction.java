@@ -2,6 +2,8 @@ package bank.models;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+
 @Entity
 @Table(name = "transactions")
 public class Transaction {
@@ -20,6 +22,9 @@ public class Transaction {
 
     @Column(nullable = false)
     private Double amount;
+
+    @Column(name = "date")
+    private Timestamp date;
 
     public Transaction() {
     }
