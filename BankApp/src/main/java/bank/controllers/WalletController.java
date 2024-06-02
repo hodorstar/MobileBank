@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/wallets")
 public class WalletController {
@@ -22,7 +24,24 @@ public class WalletController {
         return ResponseEntity.ok(newWallet);
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<Wallet> getWalletById()
+    public ResponseEntity<Wallet> getWalletById(@PathVariable Long id) {
+        Wallet wallet = walletService.getWalletById(id);
+        return ResponseEntity.ok(wallet);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Wallet>> getAllWallet() {
+        List<Wallet> wallet = walletService.getAllWallets();
+        return ResponseEntity.ok(wallet);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Wallet> updateWalletBalance(@PathVariable Long id, @RequestBody Double newBalance) {
+        walletService.updateWallet(id, newBalance);
+        Wallet wallet = walletService.getWalletById(id);
+        return ResponseEntity.ok(wallet);
+    }
 
 }
