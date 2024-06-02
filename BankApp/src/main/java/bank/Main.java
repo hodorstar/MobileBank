@@ -1,9 +1,12 @@
 package bank;
 
-import java.sql.SQLOutput;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.sql.SQLOutput;
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        System.out.println("jsfjlkdbh;wlerkhb");
+        SpringApplication.run(Main.class, args);
     }
 }
