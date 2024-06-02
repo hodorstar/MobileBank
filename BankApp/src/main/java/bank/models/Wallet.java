@@ -19,4 +19,12 @@ public class Wallet {
     public void setBalance(Double balance) {
         this.balance = balance;
     }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

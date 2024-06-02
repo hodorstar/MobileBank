@@ -14,11 +14,11 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id", nullable = false)
-    private  User sender;
+    private  Wallet sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id", nullable = false)
-    private  User receiver;
+    private  Wallet receiver;
 
     @Column(nullable = false)
     private Double amount;
@@ -26,6 +26,19 @@ public class Transaction {
     @Column(name = "date")
     private Timestamp date;
 
-    public Transaction() {
+    public void setSender(Wallet sender) {
+        this.sender = sender;
+    }
+
+    public void setReceiver(Wallet receiver) {
+        this.receiver = receiver;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 }
