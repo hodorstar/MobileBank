@@ -1,8 +1,10 @@
 package bank.controllers;
 
+import bank.models.User;
 import bank.models.Wallet;
 import bank.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +30,7 @@ public class WalletController {
     @GetMapping("/{id}")
     public ResponseEntity<Wallet> getWalletById(@PathVariable Long id) {
         Wallet wallet = walletService.getWalletById(id);
-        return ResponseEntity.ok(wallet);
+        return ResponseEntity.status(HttpStatus.CREATED).body(wallet);
     }
 
     @GetMapping
@@ -44,4 +46,10 @@ public class WalletController {
         return ResponseEntity.ok(wallet);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteWallet(@PathVariable Long id) {
+        Wallet wallet = walletService.getWalletById(id);
+        walletService.deleteWallet(wallet);
+        return ResponseEntity.ok().build();
+    }
 }
