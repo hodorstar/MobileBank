@@ -41,4 +41,15 @@ public class Transaction {
     public void setDate(Timestamp date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", sender=" + sender +
+                ", receiver=" + receiver +
+                ", amount=" + amount +
+                ", date=" + date +
+                "}\n";
+    }
 }

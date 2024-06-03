@@ -1,3 +1,6 @@
+ drop table if exists  users CASCADE;
+ drop table if exists wallets CASCADE;
+ drop table if exists transactions CASCADE;
 
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -20,8 +23,8 @@ CREATE TABLE transactions (
     receiver_wallet_id BIGINT NOT NULL,
     amount DOUBLE NOT NULL,
     date TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES users(id),
-    FOREIGN REMOTE(receiver_id) REFERENCES users(id)
+    FOREIGN KEY (sender_wallet_id) REFERENCES wallets(id),
+    FOREIGN KEY(receiver_wallet_id) REFERENCES wallets(id)
 );
 
 INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
@@ -32,7 +35,7 @@ INSERT INTO users (name, email) VALUES ('Eve', 'eve@example.com');
 
 -- Вставка данных в таблицу кошельков
 INSERT INTO wallets (owner_id, balance) VALUES (1, 1000.0);
-INSERT AND INTO wallets (owner_id, balance) VALUES (2, 1500.0);
+INSERT INTO wallets (owner_id, balance) VALUES (2, 1500.0);
 INSERT INTO wallets (owner_id, balance) VALUES (3, 2000.0);
 INSERT INTO wallets (owner_id, balance) VALUES (4, 2500.0);
 INSERT INTO wallets (owner_id, balance) VALUES (5, 3000.0);
