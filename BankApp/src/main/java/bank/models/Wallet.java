@@ -26,8 +26,23 @@ public class Wallet {
     @OneToMany(mappedBy = "receiver")
     private Set<Transaction> receivedTransactions = new HashSet<>();
 
+    public Wallet() {
+    }
+
+    public Wallet(Long id, User owner, Double balance, Set<Transaction> sentTransactions, Set<Transaction> receivedTransactions) {
+        this.id = id;
+        this.owner = owner;
+        this.balance = balance;
+        this.sentTransactions = sentTransactions;
+        this.receivedTransactions = receivedTransactions;
+    }
+
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 
     public Double getBalance() {

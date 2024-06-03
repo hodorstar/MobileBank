@@ -3,7 +3,8 @@ package bank.services;
 import bank.exceptions.UserNotFoundException;
 import bank.models.User;
 import bank.models.User;
-import bank.repository.UserPepository;
+
+import bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +14,9 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired
-    private UserPepository userRepository;
+    private UserRepository userRepository;
 
-    public UserService(UserPepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -25,7 +26,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() ->

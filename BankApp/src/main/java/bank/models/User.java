@@ -20,6 +20,20 @@ public class User {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Wallet> wallets = new HashSet<>();
 
+    public User() {
+    }
+
+    public User(Long id, String name, String email, Set<Wallet> wallets) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.wallets = wallets;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
