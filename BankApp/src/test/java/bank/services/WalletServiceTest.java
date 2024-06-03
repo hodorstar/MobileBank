@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class WalletServiceTest {
+ class WalletServiceTest {
     @Autowired
     private WalletService walletService;
 

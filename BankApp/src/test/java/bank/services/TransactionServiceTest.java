@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class TransactionServiceTest {
+ class TransactionServiceTest {
 
     @Mock
     private WalletService walletService;

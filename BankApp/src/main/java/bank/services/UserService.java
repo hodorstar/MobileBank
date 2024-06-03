@@ -2,7 +2,6 @@ package bank.services;
 
 import bank.exceptions.UserNotFoundException;
 import bank.models.User;
-import bank.models.User;
 
 import bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
