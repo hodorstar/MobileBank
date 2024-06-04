@@ -1,5 +1,6 @@
 package bank.services;
 
+import bank.DTO.WalletDTO;
 import bank.models.Transaction;
 import bank.models.User;
 import bank.models.Wallet;
@@ -29,17 +30,17 @@ import static org.mockito.Mockito.when;
     @InjectMocks
     private TransactionService transactionService;
 
-    private Wallet senderWallet;
-    private Wallet receiverWallet;
+    private WalletDTO senderWallet;
+    private WalletDTO receiverWallet;
 
     @BeforeEach
     void setUp() {
-        senderWallet = new Wallet(1L, new User(1L, "Sender", "sender@example.com", null), 1000.0, null, null);
-        receiverWallet = new Wallet(2L, new User(2L, "Receiver", "receiver@example.com", null), 500.0, null, null);
+        senderWallet = new WalletDTO(1L, 1L, 1000.0);
+        receiverWallet = new WalletDTO(2L, 2L, 500.0 );
     }
 
     @Test
-    void testExecuteTransaction_success() {
+    void testExecuteTransactionSuccess() {
         when(walletService.getWalletById(1L)).thenReturn(senderWallet);
         when(walletService.getWalletById(2L)).thenReturn(receiverWallet);
 

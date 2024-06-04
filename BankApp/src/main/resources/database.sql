@@ -23,8 +23,8 @@ CREATE TABLE transactions (
     receiver_wallet_id BIGINT NOT NULL,
     amount DOUBLE NOT NULL,
     date TIMESTAMP,
-    FOREIGN KEY (sender_wallet_id) REFERENCES wallets(id),
-    FOREIGN KEY(receiver_wallet_id) REFERENCES wallets(id)
+    FOREIGN KEY (sender_wallet_id) REFERENCES wallets(id) ON DELETE CASCADE,
+    FOREIGN KEY(receiver_wallet_id) REFERENCES wallets(id) ON DELETE CASCADE
 );
 
 INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');

@@ -13,11 +13,11 @@ public class Transaction {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id", nullable = false)
+    @JoinColumn(name = "sender_wallet_id", nullable = false)
     private  Wallet sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_id", nullable = false)
+    @JoinColumn(name = "receiver_wallet_id", nullable = false)
     private  Wallet receiver;
 
     @Column(nullable = false)

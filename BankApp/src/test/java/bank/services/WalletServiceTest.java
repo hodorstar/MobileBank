@@ -1,8 +1,10 @@
 package bank.services;
 
+import bank.DTO.WalletDTO;
 import bank.exceptions.WalletNotFoundException;
 import bank.models.User;
 import bank.models.Wallet;
+import bank.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,18 +18,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("test")
- class WalletServiceTest {
+class WalletServiceTest {
     @Autowired
     private WalletService walletService;
 
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     @Sql("classpath:test_database.sql")
     void testAllReadWallet() {
-        List<Wallet> wallets = walletService.getAllWallets();
+        List<WalletDTO> wallets = walletService.getAllWallets();
         long iter = 1;
-        for (Wallet p : wallets) {
-            assertEquals(iter, p.getId());
+        for (WalletDTO wallet : wallets) {
+            assertEquals(iter, wallet.getId());
             iter++;
         }
     }
@@ -35,9 +39,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
     @Test
     @Sql("classpath:test_database.sql")
     void testGetWalletBiId() {
-        Wallet wallet = walletService.getWalletById(3L);
+        WalletDTO wallet = walletService.getWalletById(3L);
         assertEquals(3L, wallet.getId());
-        assertEquals(3L, wallet.getOwner().getId());
+        assertEquals(3L, wallet.getOwnerId());
         assertEquals(2000.0, wallet.getBalance());
     }
 
@@ -50,11 +54,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
     @Test
     @Sql("classpath:test_database.sql")
     void testCreateWallet() {
-        Wallet wallet = new Wallet(null, new User(1l, "Alice", "alice@example.com", null), 7777.0, null, null);
-        walletService.createWallet(wallet);
-        Wallet findWallet = walletService.getWalletById(7L);
+        WalletDTO walletDTO = new WalletDTO(null, 1L, 7777.0);
+        walletService.createWallet(walletDTO);
+        WalletDTO findWallet = walletService.getWalletById(7L);
         assertEquals(7L, findWallet.getId());
-        assertEquals(1L, findWallet.getOwner().getId());
+        assertEquals(1L, findWallet.getOwnerId());
         assertEquals(7777.0, findWallet.getBalance());
     }
 
@@ -62,9 +66,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
     @Sql("classpath:test_database.sql")
     void testUpdateWallet() {
         walletService.updateWallet(2L, 9.0);
-        Wallet findWallet = walletService.getWalletById(2L);
+        WalletDTO findWallet = walletService.getWalletById(2L);
         assertEquals(2L, findWallet.getId());
-        assertEquals(2L, findWallet.getOwner().getId());
+        assertEquals(2L, findWallet.getOwnerId());
         assertEquals(9.0, findWallet.getBalance());
     }
 
@@ -77,8 +81,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
     @Test
     @Sql("classpath:test_database.sql")
     void testDeleteWallet() {
-        Wallet findWallet = walletService.getWalletById(4L);
-        walletService.deleteWallet(findWallet);
+        walletService.deleteWallet(4L);
         assertThrows(WalletNotFoundException.class, () -> walletService.getWalletById(4L));
     }
 }

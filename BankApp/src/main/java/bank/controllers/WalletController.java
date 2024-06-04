@@ -1,5 +1,7 @@
 package bank.controllers;
-
+import bank.DTO.WalletDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import bank.models.User;
 import bank.models.Wallet;
 import bank.services.WalletService;
@@ -9,47 +11,44 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/wallets")
 public class WalletController {
+
     private final WalletService walletService;
+
     @Autowired
     public WalletController(WalletService walletService) {
         this.walletService = walletService;
     }
 
     @PostMapping
-    public ResponseEntity<Wallet> createWallet(@RequestBody Wallet wallet) {
-        walletService.createWallet(wallet);
-        Wallet newWallet = walletService.getWalletById(wallet.getId());
-        return ResponseEntity.ok(newWallet);
+    public ResponseEntity<Void> createWallet(@RequestBody WalletDTO walletDTO) {
+        walletService.createWallet(walletDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<Wallet> getWalletById(@PathVariable Long id) {
-        Wallet wallet = walletService.getWalletById(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(wallet);
+    public ResponseEntity<WalletDTO> getWalletById(@PathVariable Long id) {
+        WalletDTO walletDTO = walletService.getWalletById(id);
+        return ResponseEntity.ok(walletDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<Wallet>> getAllWallet() {
-        List<Wallet> wallet = walletService.getAllWallets();
-        return ResponseEntity.ok(wallet);
+    public ResponseEntity<List<WalletDTO>> getAllWallets() {
+        List<WalletDTO> walletDTOs = walletService.getAllWallets();
+        return ResponseEntity.ok(walletDTOs);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Wallet> updateWalletBalance(@PathVariable Long id, @RequestBody Double newBalance) {
+    public ResponseEntity<Void> updateWalletBalance(@PathVariable Long id, @RequestBody Double newBalance) {
         walletService.updateWallet(id, newBalance);
-        Wallet wallet = walletService.getWalletById(id);
-        return ResponseEntity.ok(wallet);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWallet(@PathVariable Long id) {
-        Wallet wallet = walletService.getWalletById(id);
-        walletService.deleteWallet(wallet);
+        walletService.deleteWallet(id);
         return ResponseEntity.ok().build();
     }
 }

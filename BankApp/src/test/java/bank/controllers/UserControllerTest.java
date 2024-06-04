@@ -92,6 +92,23 @@ class UserControllerTest {
 
         verify(userService).deleteUser(user);
     }
+
+    @Test
+    void updateUserTest() throws Exception {
+        User user = new User(1L, "Alice", "alice@example.com", null);
+
+        mockMvc.perform(put("/users/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"Alice Updated\",\"email\":\"alice.updated@example.com\"}"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.name").value("Alice Updated"))
+                .andExpect(jsonPath("$.email").value("alice.updated@example.com"));
+
+        verify(userService, times(1)).updateUser(1L, "Alice Updated", "alice.updated@example.com");
+    }
+
 }
+
 
 

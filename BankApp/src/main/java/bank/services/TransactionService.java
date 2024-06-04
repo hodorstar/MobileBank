@@ -1,5 +1,6 @@
 package bank.services;
 
+import bank.DTO.WalletDTO;
 import bank.models.Transaction;
 import bank.models.Wallet;
 import bank.repository.TransactionRepository;
@@ -18,8 +19,8 @@ public class TransactionService {
 
 
     public void executeTransaction(Long senderWalletId, Long receiverWalletId, Double amount){
-        Wallet senderWallet = walletService.getWalletById(senderWalletId);
-        Wallet receiverWallet = walletService.getWalletById(receiverWalletId);
+        WalletDTO senderWallet = walletService.getWalletById(senderWalletId);
+        WalletDTO receiverWallet = walletService.getWalletById(receiverWalletId);
 
         if (senderWallet.getBalance() < amount) {
             throw new IllegalStateException("Execution of transaction is not possible.");
@@ -32,8 +33,8 @@ public class TransactionService {
 
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
-        transaction.setSender(senderWallet);
-        transaction.setReceiver(receiverWallet);
+        transaction.setSender(new Wallet(senderWallet.getId(), null, senderWallet.getBalance(), null, null));
+        transaction.setReceiver(new Wallet(receiverWallet.getId(), null, receiverWallet.getBalance(), null, null));
         transaction.setDate(new Timestamp(System.currentTimeMillis()));
         transactionRepository.save(transaction);
     }

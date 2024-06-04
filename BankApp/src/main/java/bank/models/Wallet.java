@@ -1,11 +1,13 @@
 package bank.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+//@JsonIgnoreProperties({"owner"})
 @Table(name = "wallets")
 public class Wallet {
     @Id
@@ -37,8 +39,16 @@ public class Wallet {
         this.receivedTransactions = receivedTransactions;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public User getOwner() {
